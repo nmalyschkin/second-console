@@ -13,7 +13,7 @@ const {
  */
 class Console extends console.Console {
   constructor({ path, port, host, ...options }) {
-    if (!!path === (!!port || !!host))
+    if (!!path && (!!port || !!host))
       throw new Error("Use either UDS or TCP/IP for second console connection");
 
     const stream = new PassThrough();

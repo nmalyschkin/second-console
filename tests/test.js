@@ -1,42 +1,28 @@
 #!/usr/bin/env node
 const { promisify } = require("util");
-const EConsole = require("../second-console");
+const Console = require("../second-console");
 
-const c = new EConsole({
+const console = new Console({
   // path: "/tmp/test",
-  port: 7337,
+  // port: 7337,
 });
 
 const sleep = promisify(setTimeout);
 (async () => {
-  console.clear();
   while (true) {
     await sleep(1000);
   }
 })();
 
 (async () => {
-  c.log("log this remotely");
-  c.log(["log this remotely"]);
-  c.log(() => {});
-  c.time("asd");
+  console.log("log this remotely");
+  console.log(["log this remotely"]);
+  console.log(() => {});
+  console.time("asd");
   await sleep(1000);
-  c.timeEnd("asd");
-  c.clear();
-  c.table(["apples", "oranges", "bananas"]);
-  c.error("test");
-  c.trace("traces work too");
-
-  await sleep(5000);
-  c.error("test");
-})();
-
-(async () => {
-  const c = console;
-  c.log("log this remotely");
-  c.log(["log this remotely"]);
-  c.log(() => {});
-  c.time("asd");
-  await sleep(1000);
-  c.timeEnd("asd");
+  console.timeEnd("asd");
+  console.clear();
+  console.table(["apples", "oranges", "bananas"]);
+  console.error("test");
+  console.trace("traces work too");
 })();
