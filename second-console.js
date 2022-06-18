@@ -1,5 +1,6 @@
 const { exec } = require("child_process");
-const { createServer } = require("net");
+const { readFile } = require("fs/promises");
+const { connect } = require("net");
 const { PassThrough } = require("stream");
 const { promisify } = require("util");
 const { encodeFlags } = require("./optionsFlags");
@@ -24,36 +25,32 @@ class EConsole extends console.Console {
       colorMode: true,
     });
 
-    let done;
-    const connctionEstablished = new Promise((res) => {
-      done = res;
-    });
-    const unixServer = createServer((client) => {
-      done(true);
-      stream.on("data", (str) =>
-        client.readyState === "closed"
-          ? process.stdout.write(str)
-          : client.write(str)
-      );
-    });
-    unixServer.unref();
-    const socketPath = path || "/tmp/node_second_console_" + generateId();
-    const flags = {
-      ...options,
-      reconnect: !!path,
-    };
-    unixServer.listen(socketPath, () => {
-      Promise.race([connctionEstablished, sleep(1200).then(() => false)]).then(
-        (consoleRunning) => {
-          if (!consoleRunning) openExternalConsole(socketPath, flags);
-        }
-      );
-    });
+    (async () => {
+      const socketPath = path || "/tmp/node_second_console_" + generateId();
 
-    process.on("SIGINT", () => {
-      unixServer.close();
-      process.exit();
-    });
+      let startExternalConsole = true;
+      if (socketPath === path) {
+        await readFile(socketPath).catch((err) => {
+          startExternalConsole = err.errno === -2;
+        });
+      }
+      if (startExternalConsole) {
+        const flags = {
+          ...options,
+          reconnect: !!path,
+        };
+        openExternalConsole(socketPath, flags);
+        await sleep(2000); // give the external console time to start;
+      }
+      const socket = connect(socketPath, () => {
+        stream.on("data", (str) =>
+          socket.readyState === "closed"
+            ? process.stdout.write(str)
+            : socket.write(str)
+        );
+      });
+      socket.unref();
+    })();
   }
 }
 

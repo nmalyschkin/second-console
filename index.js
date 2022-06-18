@@ -3,8 +3,6 @@ const { promisify } = require("util");
 const EConsole = require("./second-console");
 
 const c = new EConsole({
-  wait: true,
-  reconnect: true,
   path: "/tmp/test",
 });
 

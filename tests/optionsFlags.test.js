@@ -1,4 +1,4 @@
-const { deepEqual } = require("assert");
+const assert = require("assert");
 const { encodeFlags, decodeFlags, defaultFlags } = require("../optionsFlags");
 
-deepEqual(defaultFlags, decodeFlags(encodeFlags({})));
+assert.deepEqual(defaultFlags, decodeFlags(encodeFlags({})));
