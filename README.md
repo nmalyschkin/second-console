@@ -4,12 +4,10 @@ External nodejs console for you outputs.
 
 ## ToDos
 
-- windows support
-- linux support
-- deploy to npm
 - make external instance npx runable
 - write docs
 - tests
+- closing testing on all platforms
 
 ## (maybe) coming features
 

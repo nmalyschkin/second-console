@@ -30,7 +30,11 @@ const openExternalConsole = (socketPath, options) => {
 
     case "Linux":
     default:
-      //TODO
+      exec(
+        `gnome-terminal --window -e "${
+          process.argv[0]
+        } ${__dirname}/remote-console.js ${socketPath} ${encodeFlags(options)}"`
+      );
       break;
   }
 };
