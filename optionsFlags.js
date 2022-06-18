@@ -1,3 +1,7 @@
+/**
+ * Just a simple binary flag encoding and decoding to make passing
+ * flags from the main process to the external console easier
+ */
 const defaultFlags = {
   reconnect: false,
   wait: true,

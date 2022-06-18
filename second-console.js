@@ -1,25 +1,12 @@
-const { exec } = require("child_process");
-const { readFile } = require("fs/promises");
-const { connect, createServer } = require("net");
+const { connect } = require("net");
 const { PassThrough } = require("stream");
-const { promisify } = require("util");
-const { encodeFlags } = require("./optionsFlags");
-
-const randomId = () => Math.random().toString(36).substring(2).toUpperCase();
-const sleep = promisify(setTimeout);
-
-/**
- * Opens up a new terminal window and executes the remote console there
- */
-const openExternalConsole = (socketPath, options) => {
-  exec(
-    `osascript -e 'tell app "Terminal"
-    do script " exec ${
-      process.argv[0]
-    } ${__dirname}/remote-console.js ${socketPath} ${encodeFlags(options)}"
-end tell'`
-  );
-};
+const { openExternalConsole } = require("./openExternalConsole");
+const {
+  randomUniqueSocket,
+  sleep,
+  isPortFree,
+  socketFileTaken,
+} = require("./utils");
 
 /**
  * Create a new external console
@@ -40,41 +27,34 @@ class Console extends console.Console {
       let connectParams;
       let externalParams;
 
+      // depending on connection type prepare parameters for connection
+      // and determine whether to spin up an external console
       if (!(!!port || !!host)) {
-        const socketPath = path || "/tmp/node_second_console_" + randomId();
+        // UDS
+        const socketPath = path || randomUniqueSocket();
         if (socketPath === path) {
-          await readFile(socketPath).catch((err) => {
-            startExternalConsole = err.errno === -2;
-          });
+          await socketFileTaken(socketPath);
         }
         connectParams = [socketPath];
         externalParams = socketPath;
       } else {
+        // TCP/IP
         connectParams = [port, host || "127.0.0.1"];
         externalParams = port;
-        startExternalConsole = !!host
-          ? false
-          : await new Promise((res) => {
-              const server = createServer();
-              server.once("error", (err) => {
-                res(false);
-              });
-              server.once("listening", () => {
-                server.close(() => {
-                  res(true);
-                });
-              });
-              server.listen(port);
-            });
+        startExternalConsole = !!host ? false : await isPortFree(port);
       }
+
+      // start an external console if needed
       if (startExternalConsole) {
         const flags = {
           ...options,
           reconnect: !!path,
         };
         openExternalConsole(externalParams, flags);
-        await sleep(5000); // give the external console time to start;
+        await sleep(1000); // give the external console time to start;
       }
+
+      // create connection and pipe the stream into it
       const socket = connect(...connectParams, () => {
         stream.on("data", (str) =>
           socket.readyState === "closed"
@@ -82,7 +62,7 @@ class Console extends console.Console {
             : socket.write(str)
         );
       });
-      socket.unref();
+      socket.unref(); // so the socket does not keep our process from exiting
     })();
   }
 
