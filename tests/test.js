@@ -3,8 +3,7 @@ const { promisify } = require("util");
 const Console = require("../second-console");
 
 const console = new Console({
-  // path: "/tmp/test",
-  // port: 7337,
+  path: Console.createIPCPath("test"),
 });
 
 const sleep = promisify(setTimeout);

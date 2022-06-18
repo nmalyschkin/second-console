@@ -1,6 +1,7 @@
 const { readFile } = require("fs/promises");
 const { createServer } = require("net");
-const { tmpdir } = require("os");
+const { tmpdir, type } = require("os");
+const { join } = require("path");
 const { promisify } = require("util");
 
 /**
@@ -8,9 +9,13 @@ const { promisify } = require("util");
  * @returns string
  */
 const randomUniqueSocket = () =>
-  tmpdir() +
-  "/node_second_console_" +
-  Math.random().toString(36).substring(2).toUpperCase();
+  createIPCPath(
+    "node_second_console_" +
+      Math.random().toString(36).substring(2).toUpperCase()
+  );
+
+const createIPCPath = (seed) =>
+  join(type() === "Windows_NT" ? "\\\\?\\pipe" : tmpdir(), seed);
 
 /**
  * Async waiting
@@ -53,4 +58,5 @@ module.exports = {
   sleep,
   isPortFree,
   socketFileTaken,
+  createIPCPath,
 };
