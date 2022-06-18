@@ -3,7 +3,8 @@ const { promisify } = require("util");
 const EConsole = require("../second-console");
 
 const c = new EConsole({
-  path: "/tmp/test",
+  // path: "/tmp/test",
+  port: 7337,
 });
 
 const sleep = promisify(setTimeout);
