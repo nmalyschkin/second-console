@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 const { promisify } = require("util");
-const EConsole = require("./second-console");
+const EConsole = require("../second-console");
 
 const c = new EConsole({
   path: "/tmp/test",
