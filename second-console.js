@@ -10,9 +10,9 @@ const sleep = promisify(setTimeout);
 const openExternalConsole = (socketPath, options) => {
   exec(
     `osascript -e 'tell app "Terminal"
-    do script " exec node ${__dirname}/remote-console.js ${socketPath} ${encodeFlags(
-      options
-    )}"
+    do script " exec ${
+      process.argv[0]
+    } ${__dirname}/remote-console.js ${socketPath} ${encodeFlags(options)}"
 end tell'`
   );
 };
@@ -40,7 +40,7 @@ class EConsole extends console.Console {
           reconnect: !!path,
         };
         openExternalConsole(socketPath, flags);
-        await sleep(2000); // give the external console time to start;
+        await sleep(1000); // give the external console time to start;
       }
       const socket = connect(socketPath, () => {
         stream.on("data", (str) =>
@@ -51,6 +51,10 @@ class EConsole extends console.Console {
       });
       socket.unref();
     })();
+  }
+
+  clear() {
+    this.log("\x1bc");
   }
 }
 
