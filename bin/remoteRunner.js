@@ -1,13 +1,33 @@
 #! /usr/bin/env node
 
+const { type } = require("os");
 const { join } = require("path");
 const startRemoteConsole = require("../startRemoteConsole");
 const { createIPCPath, randomUniqueSocket } = require("../utils");
+
+const helpText = `
+second-console creates a remote console for you JS application
+
+usage:
+npx second-console -s <SEED>
+npx second-console -p <PORT>
+npx second-console --path <PATH>
+
+options:
+  -q,--quiet  start the console quitely
+  -c,--clear  clear the console on reconnection
+  -e,--exit   exit the console when the application disconnects
+
+help:
+https://github.com/nmalyschkin/second-console (${
+  type() === "Darwin" ? "⌘" : "ctrl"
+} + click)`;
 
 const parsedOptions = () => {
   const arguments = process.argv.slice(2);
   const options = {
     print: true,
+    reconnect: true,
   };
 
   while (arguments.length) {
@@ -22,7 +42,8 @@ const parsedOptions = () => {
       case "-p":
       case "--port":
         if (!arguments.length) throw new Error("missing port parameter");
-        options.port = arguments.shift();
+        options.port = Number(arguments.shift());
+        if (isNaN(options.port)) throw new Error("port must be a number");
         break;
 
       case "--path":
@@ -69,17 +90,18 @@ try {
     port || path || (seed ? createIPCPath(seed) : randomUniqueSocket());
 
   if (help) {
-    console.log("Help is on its way");
+    console.log(helpText);
     process.exit(0);
   }
 
   if (print) {
+    console.group("\x1b[4mcopy this to your code or REPL\x1b[0m");
     console.log(
-      `
-    const console = new (require("${join(__dirname, "..")}"))({ ${
+      `\x1b[1mconst console = new (require("${join(__dirname, "..")}"))({ ${
         !!port ? "port" : "path"
-      }:"${listenTo}" });`
+      }:${JSON.stringify(listenTo)} });\x1b[0m`
     );
+    console.groupEnd();
   }
 
   startRemoteConsole(listenTo, options);

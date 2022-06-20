@@ -1,6 +1,6 @@
 {
   "name": "second-console",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "external nodejs console",
   "main": "second-console.js",
   "directories": {

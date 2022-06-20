@@ -1,4 +1,6 @@
-# second console
+# second console &middot; ![npm](https://img.shields.io/npm/v/second-console) ![npm bundle size](https://img.shields.io/bundlephobia/min/second-console) ![dependencies](https://img.shields.io/badge/dependencies-none!-red) ![license](https://img.shields.io/npm/l/second-console)
+
+<!-- ![jsDelivr hits (npm)](https://img.shields.io/jsdelivr/npm/hd/second-console) -->
 
 External nodejs console for you outputs.
 
@@ -19,7 +21,7 @@ npm i second-console
 ```
 
 ```js
-const Console = require("../second-console");
+const Console = require("second-console");
 const console = new Console({
   seed: "myAwesomeConsole",
 });
@@ -31,6 +33,7 @@ If you want to start the remote console yourself (e.g. in your IDE), just use `n
 ## ToDos
 
 - write docs
+- add close() functionality to expicitly close the console (test whether unrev is already closing the socket when running out of scope)
 - tests
 - closing testing on all platforms
 - test over the network
