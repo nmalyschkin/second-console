@@ -20,7 +20,7 @@ const sleep = promisify(setTimeout);
   console.time("asd");
   await sleep(1000);
   console.timeEnd("asd");
-  console.clear();
+  // console.clear();
   console.table(["apples", "oranges", "bananas"]);
   console.error("test");
   console.trace("traces work too");

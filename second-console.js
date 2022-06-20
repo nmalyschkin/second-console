@@ -5,14 +5,14 @@ const {
   randomUniqueSocket,
   sleep,
   isPortFree,
-  socketFileTaken,
+  isIPCTaken,
   createIPCPath,
 } = require("./utils");
 
 /**
  * Create a new external console
  */
-class Console extends console.Console {
+class Console extends global.console.Console {
   constructor({ path, port, host, ...options } = {}) {
     if (!!path && (!!port || !!host))
       throw new Error("Use either UDS or TCP/IP for second console connection");
@@ -34,7 +34,7 @@ class Console extends console.Console {
         // UDS
         const socketPath = path || randomUniqueSocket();
         if (socketPath === path) {
-          startExternalConsole = !(await socketFileTaken(socketPath));
+          startExternalConsole = !(await isIPCTaken(socketPath));
         }
         connectParams = [socketPath];
         externalParams = socketPath;

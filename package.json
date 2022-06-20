@@ -9,6 +9,9 @@
   "scripts": {
     "test": "node tests/test.js"
   },
+  "bin": {
+    "second-console": "bin/remoteRunner.js"
+  },
   "keywords": [
     "nodejs",
     "console"

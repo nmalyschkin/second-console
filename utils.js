@@ -46,7 +46,7 @@ const isPortFree = (port) =>
  * @param {string} path
  * @returns
  */
-const socketFileTaken = (path) =>
+const isIPCTaken = (path) =>
   readFile(path)
     .catch((err) => {
       return err.errno !== -2;
@@ -57,6 +57,6 @@ module.exports = {
   randomUniqueSocket,
   sleep,
   isPortFree,
-  socketFileTaken,
+  isIPCTaken,
   createIPCPath,
 };
