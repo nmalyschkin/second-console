@@ -74,12 +74,11 @@ try {
   }
 
   if (print) {
-    console.log();
     console.log(
       `
     const console = new (require("${join(__dirname, "..")}"))({ ${
         !!port ? "port" : "path"
-      }:${listenTo} });`
+      }:"${listenTo}" });`
     );
   }
 
