@@ -1,6 +1,6 @@
 {
   "name": "second-console",
-  "version": "0.0.8",
+  "version": "0.1.0",
   "description": "external nodejs console",
   "main": "second-console.js",
   "directories": {
@@ -10,7 +10,7 @@
     "test": "node tests/test.js"
   },
   "bin": {
-    "second-console": "bin/remoteRunner.js"
+    "second-console": "src/remoteRunner.js"
   },
   "keywords": [
     "nodejs",

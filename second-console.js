@@ -1,21 +1,23 @@
 const { connect } = require("net");
 const { PassThrough } = require("stream");
-const { openExternalConsole } = require("./openExternalConsole");
+const { openExternalConsole } = require("./src/openExternalConsole");
 const {
   randomUniqueSocket,
   sleep,
   isPortFree,
   isIPCTaken,
   createIPCPath,
-} = require("./utils");
+} = require("./src/utils");
 
 /**
  * Create a new external console
  */
 class Console extends global.console.Console {
   constructor({ path, port, host, ...options } = {}) {
-    if (!!path && (!!port || !!host))
-      throw new Error("Use either UDS or TCP/IP for second console connection");
+    if (!!port + !!path + !!seed > 1)
+      throw new Error(
+        "Use either seed, port or path for second console connection"
+      );
 
     const stream = new PassThrough();
     super({
@@ -32,8 +34,10 @@ class Console extends global.console.Console {
       // and determine whether to spin up an external console
       if (!(!!port || !!host)) {
         // UDS
-        const socketPath = path || randomUniqueSocket();
-        if (socketPath === path) {
+        const socketPath = !!seed
+          ? createIPCPath(seed)
+          : path || randomUniqueSocket();
+        if (!!seed || !!path) {
           startExternalConsole = !(await isIPCTaken(socketPath));
         }
         connectParams = [socketPath];

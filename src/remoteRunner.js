@@ -2,8 +2,8 @@
 
 const { type } = require("os");
 const { join } = require("path");
-const startRemoteConsole = require("../startRemoteConsole");
-const { createIPCPath, randomUniqueSocket } = require("../utils");
+const startRemoteConsole = require("./startRemoteConsole");
+const { createIPCPath, randomUniqueSocket } = require("./utils");
 
 const helpText = `
 second-console creates a remote console for you JS application
