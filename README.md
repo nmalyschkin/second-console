@@ -2,7 +2,7 @@
 
 External nodejs console for you outputs.
 
-![example](https://user-images.githubusercontent.com/44928856/174535568-134b21ea-62d8-4f1a-b524-c762e152d21b.png)
+![example](https://user-images.githubusercontent.com/44928856/174538853-8af9d728-0f21-4b9f-af1a-a5ce9a5875d0.png)
 
 ## Quick Quick Start (no install)
 
