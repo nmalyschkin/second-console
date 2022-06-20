@@ -12,7 +12,7 @@ External nodejs console for you outputs.
 npx second-console
 ```
 
-Then copy/paste the code-snippet and you are already connected.
+Copy/paste the code-snippet and you are already connected.
 
 ## Quick Start
 
@@ -54,11 +54,11 @@ const remoteConsole = new Console({
 
 ### multiple inputs and outputs
 
-So pratically multiple processes could share multiple remote consoles, where P1 and P2 both write to C1 and C2.
-This could come in handy when your running some network of workers and have a multiple reporting channels.
+So pratically multiple processes could share multiple remote consoles, where for example P1 and P2 both write to C1 and C2.
+This could come in handy when you're running some network of workers and have multiple reporting channels.
 
-Although this works you could encounter that some issues when two or more workers try to write big chunks on the same console.
-Since the transmission is chunked and not properly orders on the remote console, this could result in merged messages.
+Although this works you could encounter that some issues when two or more workers try to write big outputs on the same console.
+Since the transmission is chunked and not properly ordered on the remote console, this could result in overlapping messages.
 
 ## Use-cases
 
@@ -88,12 +88,11 @@ Yeah, you can `docker logs -f myCuntainer` but you don't have time to type that 
 
 ### outsource debug logs
 
-Debug logs are the #1 reason why I use `throw` instead of `console.log` when debugging.
 Just outsource these badboys to an external console and have a nice day.
 
 ## using in production
 
-Could you? -> Sure!
+Could you? -> Sure! <br>
 Should you? -> Probably not
 
 ## (maybe) coming features
