@@ -13,7 +13,7 @@ const {
  * Create a new external console
  */
 class Console extends global.console.Console {
-  constructor({ path, port, host, ...options } = {}) {
+  constructor({ path, port, host, seed, ...options } = {}) {
     if (!!port + !!path + !!seed > 1)
       throw new Error(
         "Use either seed, port or path for second console connection"

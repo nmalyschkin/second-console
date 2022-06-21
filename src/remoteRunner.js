@@ -17,6 +17,7 @@ options:
   -q,--quiet  start the console quitely
   -c,--clear  clear the console on reconnection
   -e,--exit   exit the console when the application disconnects
+  -v,--version  print the executing second-console versions
 
 help:
 https://github.com/nmalyschkin/second-console (${
@@ -67,13 +68,24 @@ const parsedOptions = () => {
         options.help = true;
         break;
 
+      case "-v":
+      case "--version":
+        options.version = true;
+        break;
+
       case "-q":
       case "--quiet":
         options.print = false;
         break;
 
       default:
-        throw new Error(`Unknown argument: ${nextArguemnt}`);
+        if (/^-\w*$/.test(nextArguemnt)) {
+          const compoundArguments = nextArguemnt
+            .substring(1)
+            .split("")
+            .map((letter) => "-" + letter);
+          arguments.push(...compoundArguments);
+        } else throw new Error(`Unknown argument: ${nextArguemnt}`);
     }
   }
 
@@ -84,7 +96,8 @@ const parsedOptions = () => {
 };
 
 try {
-  const { seed, port, path, help, print, ...options } = parsedOptions();
+  const { seed, port, path, help, print, version, ...options } =
+    parsedOptions();
 
   const listenTo =
     port || path || (seed ? createIPCPath(seed) : randomUniqueSocket());
@@ -92,6 +105,11 @@ try {
   if (help) {
     console.log(helpText);
     process.exit(0);
+  }
+
+  if (version) {
+    const { version: ver } = require("../package.json");
+    console.log(`second-console v${ver}`);
   }
 
   if (print) {
