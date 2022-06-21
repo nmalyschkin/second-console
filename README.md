@@ -60,6 +60,13 @@ This could come in handy when you're running some network of workers and have mu
 Although this works you could encounter that some issues when two or more workers try to write big outputs on the same console.
 Since the transmission is chunked and not properly ordered on the remote console, this could result in overlapping messages.
 
+## Known issues
+
+- Windows is making problems when we use the IPC channels for connection. If you're having troubles try using `npx second-console -p 9098` instead.
+- WSL in itself works but is not (yet) intercomatible with Windows consoles. Maybe the external console needs to be started with `0.0.0.0` for host.
+  IPC Channels between WSL and Windows is probably never going to work (at least in the forseeable future).
+- WSL is not (yet) supporting automatic start of an external console. This is probably fixable.
+
 ## Use-cases
 
 Here are some use-cases I had in mind. (howtos coming soon)
