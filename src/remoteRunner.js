@@ -79,7 +79,7 @@ const parsedOptions = () => {
         break;
 
       default:
-        if (/^-\w*$/.test(nextArguemnt)) {
+        if (/^-\w{2,}$/.test(nextArguemnt)) {
           const compoundArguments = nextArguemnt
             .substring(1)
             .split("")
@@ -115,9 +115,9 @@ try {
   if (print) {
     console.group("\x1b[4mcopy this to your code or REPL\x1b[0m");
     console.log(
-      `\x1b[1mconst console = new (require("${join(__dirname, "..")}"))({ ${
-        !!port ? "port" : "path"
-      }:${JSON.stringify(listenTo)} });\x1b[0m`
+      `\x1b[1mconst console = new (require(${JSON.stringify(
+        join(__dirname, "..")
+      )}))({ ${!!port ? "port" : "path"}:${JSON.stringify(listenTo)} });\x1b[0m`
     );
     console.groupEnd();
   }
