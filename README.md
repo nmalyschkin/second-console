@@ -1,4 +1,4 @@
-# second console &middot; ![npm](https://img.shields.io/npm/v/second-console) ![npm bundle size](https://img.shields.io/bundlephobia/min/second-console) ![dependencies](https://img.shields.io/badge/dependencies-none!-red) ![license](https://img.shields.io/npm/l/second-console)
+# second console &middot; ![npm](https://img.shields.io/npm/v/second-console) [![install size](https://packagephobia.com/badge?p=second-console)](https://packagephobia.com/result?p=second-console) ![dependencies](https://img.shields.io/badge/dependencies-none!-red) ![license](https://img.shields.io/npm/l/second-console)
 
 <!-- ![jsDelivr hits (npm)](https://img.shields.io/jsdelivr/npm/hd/second-console) -->
 
