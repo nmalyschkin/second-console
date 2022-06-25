@@ -1,5 +1,9 @@
 # second console &middot; ![npm](https://img.shields.io/npm/v/second-console) ![npm bundle size](https://img.shields.io/bundlephobia/min/second-console) ![dependencies](https://img.shields.io/badge/dependencies-none!-red) ![license](https://img.shields.io/npm/l/second-console)
 
+[![NPM Version][npm-version-image]][npm-url]
+[![NPM Install Size][npm-install-size-image]][npm-install-size-url]
+[![NPM Downloads][npm-downloads-image]][npm-downloads-url]
+
 <!-- ![jsDelivr hits (npm)](https://img.shields.io/jsdelivr/npm/hd/second-console) -->
 
 External nodejs console for you outputs.
