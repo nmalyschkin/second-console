@@ -108,6 +108,7 @@ Should you? -> Probably not
 - input support
 - inject external console to modules via wrap function
 - close() function
+- (alpine) docker image with injected external console
 
 ## Contribution
 

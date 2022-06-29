@@ -1,5 +1,6 @@
 const { connect } = require("net");
 const { PassThrough } = require("stream");
+const { createRequire } = require("./src/injectRequire");
 const { openExternalConsole } = require("./src/openExternalConsole");
 const {
   randomUniqueSocket,
@@ -77,5 +78,6 @@ class Console extends global.console.Console {
 }
 
 Console.createIPCPath = createIPCPath;
+Console.createRequire = createRequire;
 
 module.exports = Console;
