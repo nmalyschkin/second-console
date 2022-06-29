@@ -7,7 +7,7 @@ const Module = require("module");
  * @param {Console} console
  * @returns {Module.require}
  */
-const createRequire = (console) => {
+const createRequire = (console, __parent = module.parent.id) => {
   const require = (id) => {
     const _compile = Module.prototype._compile;
     globalThis["_node_second_console_injection_console"] = console;
@@ -27,7 +27,7 @@ const createRequire = (console) => {
           filename
         );
       };
-      response = Module.createRequire(module.parent.id)(id);
+      response = Module.createRequire(__parent)(id);
     } catch (error) {
       _err = error;
     }
