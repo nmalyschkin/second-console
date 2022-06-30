@@ -13,7 +13,7 @@ const {
 /**
  * Create a new external console
  */
-class Console extends global.console.Console {
+class SecondConsole extends global.console.Console {
   constructor({ path, port, host, seed, ...options } = {}) {
     if (!!port + !!path + !!seed > 1)
       throw new Error(
@@ -77,7 +77,7 @@ class Console extends global.console.Console {
   }
 }
 
-Console.createIPCPath = createIPCPath;
-Console.createRequire = createRequire;
+SecondConsole.createIPCPath = createIPCPath;
+SecondConsole.createRequire = createRequire;
 
-module.exports = Console;
+module.exports = SecondConsole;

@@ -7,7 +7,7 @@ const run = async () => {
 
   for (const t of tests) {
     try {
-      await t.fn();
+      await t.func();
       console.log("✅", t.name);
     } catch (e) {
       failedTests.push(t.name);
@@ -30,12 +30,14 @@ const run = async () => {
   }
 };
 
-global.test = function (name, fn) {
-  tests.push({ name, fn });
+global.test = function (name, func) {
+  tests.push({ name, func });
 };
 
-process.argv.slice(2).forEach((file) => {
-  require(join(__dirname, "..", file));
+process.argv.slice(2).forEach((testFile) => {
+  require(join(__dirname, "..", testFile));
 });
+
+delete global.test;
 
 run();
